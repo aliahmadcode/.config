@@ -21,4 +21,6 @@
 !ranger/
 !ranger/**
 
+!mimeapps.list
+
 !.gitignore
