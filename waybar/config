@@ -1,0 +1,36 @@
+{
+    "layer": "bottom",
+    "position": "bottom",
+    "height": 30,
+    "spacing": 4,
+    "modules-left": ["clock", "hyprland/workspaces"],
+    "modules-right": ["cpu", "memory"],
+
+    "hyprland/workspaces": {
+      "disable-scroll": true,
+      "all-outputs": true,
+      "on-click": "activate",
+      "format": "{icon}",
+      "format-icons": {
+          "1": "code",
+          "2": "web",
+          "3": "a",
+          "4": "b",
+          "5": "c",
+      }  
+    },
+    "clock": {
+        "format": "{:%a  %d  %I:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "cpu": {
+        "format": "  {usage}",
+        "tooltip": true,
+    },
+    "memory": {
+        "format": "󰪩 {}",
+        "tooltip": true,
+    }
+
+}

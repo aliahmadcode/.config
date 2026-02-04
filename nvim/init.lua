@@ -76,9 +76,8 @@ vim.keymap.set("n", "sk", "<C-w>k", opts)
 vim.keymap.set("n", "sl", "<C-w>l", opts)
 vim.keymap.set("n", "sh", "<C-w>h", opts)
 
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -92,8 +91,27 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   {
+    'nvim-telescope/telescope.nvim',
+    version = '*',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    }
+  },
+  {
+    "ThePrimeagen/harpoon",
+    config = function()
+      local mark = require("harpoon.mark")
+      local ui = require("harpoon.ui")
+      vim.keymap.set("n", "<S-n>", function() mark.add_file() end)
+      vim.keymap.set("n", "<S-w>", function() ui.toggle_quick_menu() end)
+      vim.keymap.set("n", "<tab>", function() ui.nav_next() end)
+      vim.keymap.set("n", "<S-tab>", function() ui.nav_prev() end)
+    end
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
-
+    build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.config").setup({
         ensure_installed = {
@@ -104,6 +122,8 @@ require("lazy").setup({
           "javascript",
           "typescript"
         },
+
+        install_dir = vim.fn.stdpath("data") .. "/lazy/nvim-treesitter",
 
         auto_install = true,
 
@@ -166,6 +186,6 @@ require("lazy").setup({
         },
       })
     end,
-  }
+  },
 
 })
