@@ -36,4 +36,9 @@ window#waybar {
 
 #memory {
     color: #555555;
+    margin-right: 5px;
+}
+
+#battery {
+    color: #555555;
 }

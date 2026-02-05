@@ -4,7 +4,7 @@
     "height": 30,
     "spacing": 4,
     "modules-left": ["clock", "hyprland/workspaces"],
-    "modules-right": ["cpu", "memory"],
+    "modules-right": ["cpu", "memory", "battery"],
 
     "hyprland/workspaces": {
       "disable-scroll": true,
@@ -31,6 +31,16 @@
     "memory": {
         "format": "󰪩 {}",
         "tooltip": true,
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "󰁹 {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": " {capacity}%",
+        "tooltip": false
     }
 
 }

@@ -12,7 +12,7 @@ vim.opt.hidden = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 vim.opt.clipboard = "unnamedplus"
-vim.opt.mouse = "a"
+vim.opt.mouse = ""
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.shiftwidth = 2
@@ -64,8 +64,7 @@ vim.g.mapleader = " "
 local opts = { noremap = true, silent = true }
 
 vim.keymap.set("n", "<A-e>", ":Rex<CR>", opts)
-vim.keymap.set("n", "<C-s>", ":wa<CR>", opts)
-
+vim.keymap.set("n", "<leader>e", ":Ex<CR>", opts)
 vim.keymap.set("n", "<C-f>", ":lua vim.lsp.buf.format()<CR>", opts)
 
 vim.keymap.set("n", "ss", ":split<CR>", opts)
@@ -96,7 +95,19 @@ require("lazy").setup({
     dependencies = {
       'nvim-lua/plenary.nvim',
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-    }
+    },
+    config = function()
+      local builtin = require('telescope.builtin')
+      vim.keymap.set('n', '<leader>ff', builtin.find_files)
+      vim.keymap.set('n', '<leader>fg', builtin.live_grep)
+      vim.keymap.set('n', '<leader>fb', builtin.buffers)
+      vim.keymap.set('n', '<leader>fh', builtin.help_tags)
+
+      vim.keymap.set("n", "gd", builtin.lsp_definitions)
+      vim.keymap.set("n", "gi", builtin.lsp_implementations)
+      vim.keymap.set("n", "gr", builtin.lsp_references)
+      vim.keymap.set("n", "gt", builtin.lsp_type_definitions)
+    end
   },
   {
     "ThePrimeagen/harpoon",
@@ -110,39 +121,29 @@ require("lazy").setup({
     end
   },
   {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    config = function()
-      require("nvim-treesitter.config").setup({
-        ensure_installed = {
-          "c",
-          "lua",
-          "vim",
-          "vimdoc",
-          "javascript",
-          "typescript"
-        },
-
-        install_dir = vim.fn.stdpath("data") .. "/lazy/nvim-treesitter",
-
-        auto_install = true,
-
-        highlight = {
-          enable = true,
-        },
-
-        indent = {
-          enable = true,
-        },
-      })
-    end,
-  },
-  {
     'windwp/nvim-autopairs',
     event = "InsertEnter",
     config = true
   },
-
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    init = function()
+      vim.g.treesitter = {
+        ensure_installed = {
+          "vim", "lua", "vimdoc", "html", "css", "javascript",
+          "typescript", "tsx", "astro", "vue", "svelte",
+          "markdown", "json", "yaml"
+        },
+        highlight = { enable = true },
+        indent = { enable = true },
+      }
+    end,
+  },
+  {
+    "L3MON4D3/LuaSnip",
+    dependencies = { "rafamadriz/friendly-snippets" },
+  },
   {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -150,15 +151,25 @@ require("lazy").setup({
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-nvim-lsp",
+      "saadparwaiz1/cmp_luasnip",
     },
 
     config = function()
       require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls" },
+        ensure_installed = {
+          "lua_ls",
+          "ts_ls",
+          "tailwindcss",
+          "html",
+          "cssls"
+        },
       })
-      local capabilities =
-          require("cmp_nvim_lsp").default_capabilities()
+
+
+      require("luasnip.loaders.from_vscode").lazy_load()
+
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 
       vim.lsp.config("lua_ls", {
@@ -175,11 +186,27 @@ require("lazy").setup({
         },
       })
 
+      vim.lsp.config("ts_ls", {
+        capabilities = capabilities,
+        filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+      })
+
+      vim.lsp.config("tailwindcss", {
+        capabilities = capabilities,
+        filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
+      })
+
+      vim.lsp.config("html", { capabilities = capabilities })
+
+      vim.lsp.config("cssls", { capabilities = capabilities })
+
       local cmp = require("cmp")
       cmp.setup({
         mapping = {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<Tab>"] = cmp.mapping.select_next_item(),
+          ["<S-Tab>"] = cmp.mapping.select_prev_item(),
         },
         sources = {
           { name = "nvim_lsp" },
@@ -187,5 +214,16 @@ require("lazy").setup({
       })
     end,
   },
+
+  {
+    "j-hui/fidget.nvim",
+    opts = {
+      notification = {
+        window = {
+          winblend = 0,
+        },
+      },
+    },
+  }
 
 })
