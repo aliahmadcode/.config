@@ -157,20 +157,23 @@ require("lazy").setup({
     config = function()
       require("mason").setup()
       require("mason-lspconfig").setup({
+
         ensure_installed = {
           "lua_ls",
           "ts_ls",
           "tailwindcss",
           "html",
-          "cssls"
+          "cssls",
+          "bashls"
         },
+
+        automatic_enable = true
       })
 
 
       require("luasnip.loaders.from_vscode").lazy_load()
 
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
 
       vim.lsp.config("lua_ls", {
         capabilities = capabilities,
@@ -197,6 +200,8 @@ require("lazy").setup({
       })
 
       vim.lsp.config("html", { capabilities = capabilities })
+
+      vim.lsp.config("bashls", { capabilities = capabilities })
 
       vim.lsp.config("cssls", { capabilities = capabilities })
 
