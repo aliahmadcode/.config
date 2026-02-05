@@ -23,7 +23,7 @@
     "custom/tmux": {
         "format": "{}",
         "return-type": "json",
-        "max-length": 40,
+        "max-length": 80,
         "interval": 1, 
         "exec": "~/.config/waybar/scripts/tmux_status.sh",
     },
