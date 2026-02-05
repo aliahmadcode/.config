@@ -3,7 +3,7 @@
     "position": "bottom",
     "height": 30,
     "spacing": 4,
-    "modules-left": ["clock", "hyprland/workspaces"],
+    "modules-left": ["clock", "hyprland/workspaces", "custom/tmux"],
     "modules-right": ["cpu", "memory", "battery"],
 
     "hyprland/workspaces": {
@@ -19,6 +19,15 @@
           "5": "c",
       }  
     },
+
+    "custom/tmux": {
+        "format": "{}",
+        "return-type": "json",
+        "max-length": 40,
+        "interval": 1, 
+        "exec": "~/.config/waybar/scripts/tmux_status.sh",
+    },
+
     "clock": {
         "format": "{:%a  %d  %I:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
