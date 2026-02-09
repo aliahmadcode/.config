@@ -40,7 +40,15 @@ window#waybar {
 }
 
 #battery {
-  color: #555555;
+  color: green;
+}
+
+#battery.warning {
+    color: orange;
+}
+
+#battery.critical {
+    color: #ffcc66;
 }
 
 #custom-tmux {

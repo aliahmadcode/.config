@@ -59,6 +59,8 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
+
+
 vim.g.mapleader = " "
 
 local opts = { noremap = true, silent = true }
@@ -141,17 +143,12 @@ require("lazy").setup({
     end,
   },
   {
-    "L3MON4D3/LuaSnip",
-    dependencies = { "rafamadriz/friendly-snippets" },
-  },
-  {
     "neovim/nvim-lspconfig",
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-nvim-lsp",
-      "saadparwaiz1/cmp_luasnip",
     },
 
     config = function()
@@ -170,13 +167,15 @@ require("lazy").setup({
         automatic_enable = true
       })
 
-
-      require("luasnip.loaders.from_vscode").lazy_load()
+      local on_attach = function(client, _)
+        client.server_capabilities.semanticTokensProvider = nil
+      end
 
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
       vim.lsp.config("lua_ls", {
         capabilities = capabilities,
+        on_attach = on_attach,
         settings = {
           Lua = {
             diagnostics = { globals = { "vim" } },
@@ -191,19 +190,21 @@ require("lazy").setup({
 
       vim.lsp.config("ts_ls", {
         capabilities = capabilities,
+        on_attach = on_attach,
         filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
       })
 
       vim.lsp.config("tailwindcss", {
         capabilities = capabilities,
+        on_attach = on_attach,
         filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
       })
 
-      vim.lsp.config("html", { capabilities = capabilities })
+      vim.lsp.config("html", { on_attach = on_attach, capabilities = capabilities })
 
-      vim.lsp.config("bashls", { capabilities = capabilities })
+      vim.lsp.config("bashls", { on_attach = on_attach, capabilities = capabilities })
 
-      vim.lsp.config("cssls", { capabilities = capabilities })
+      vim.lsp.config("cssls", { on_attach = on_attach, capabilities = capabilities })
 
       local cmp = require("cmp")
       cmp.setup({
