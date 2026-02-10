@@ -9,6 +9,15 @@ application/x-extension-shtml=firefox.desktop
 application/xhtml+xml=firefox.desktop
 application/x-extension-xhtml=firefox.desktop
 application/x-extension-xht=firefox.desktop
+image/png=firefox.desktop
+image/jpeg=firefox.desktop
+image/webp=firefox.desktop
+video/mp4=org.gnome.Totem.desktop
+video/x-matroska=org.gnome.Totem.desktop
+application/pdf=firefox.desktop
+text/xml=firefox.desktop
+application/xml=firefox.desktop
+image/gif=firefox.desktop
 
 [Added Associations]
 x-scheme-handler/http=firefox.desktop;
