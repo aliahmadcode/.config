@@ -14,7 +14,7 @@ vim.opt.incsearch = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.mouse = "a"
 vim.opt.number = true
-vim.opt.relativenumber = false 
+vim.opt.relativenumber = false
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.ignorecase = true
@@ -161,7 +161,8 @@ require("lazy").setup({
           "tailwindcss",
           "html",
           "cssls",
-          "bashls"
+          "bashls",
+          "pyright",
         },
 
         automatic_enable = true
@@ -186,6 +187,17 @@ require("lazy").setup({
             telemetry = { enable = false },
           },
         },
+      })
+
+
+      vim.lsp.config("pyright", {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
+
+      vim.lsp.config("rust_analyzer", {
+        capabilities = capabilities,
+        on_attach = on_attach,
       })
 
       vim.lsp.config("ts_ls", {
