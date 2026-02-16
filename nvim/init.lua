@@ -130,16 +130,39 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    init = function()
-      vim.g.treesitter = {
-        ensure_installed = {
-          "vim", "lua", "vimdoc", "html", "css", "javascript",
-          "typescript", "tsx", "astro", "vue", "svelte",
-          "markdown", "json", "yaml"
-        },
+    dependencies = {
+      "windwp/nvim-ts-autotag",
+    },
+    config = function()
+      require("nvim-treesitter.config").setup({
+        ensure_installed = { "vim", "lua", "html", "css", "javascript", "typescript", "tsx" },
         highlight = { enable = true },
         indent = { enable = true },
-      }
+      })
+      require("nvim-ts-autotag").setup({
+        opts = {
+          enable_close = true,
+          enable_rename = true,
+          enable_close_on_slash = false,
+        },
+        per_filetype = {
+          ["html"] = { enable_close = true },
+          ["javascriptreact"] = { enable_close = true },
+          ["typescriptreact"] = { enable_close = true },
+        }
+      })
+    end,
+  },
+  {
+    "L3MON4D3/LuaSnip",
+    dependencies = { "rafamadriz/friendly-snippets" },
+    config = function()
+      local ls = require("luasnip")
+      require("luasnip.loaders.from_vscode").lazy_load()
+      ls.filetype_extend("javascriptreact", { "html", "javascript" })
+      ls.filetype_extend("typescriptreact", { "html", "typescript" })
+      ls.filetype_extend("svelte", { "html", "javascript", "css" })
+      ls.filetype_extend("vue", { "html", "javascript", "css" })
     end,
   },
   {
@@ -149,9 +172,12 @@ require("lazy").setup({
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-nvim-lsp",
+      "saadparwaiz1/cmp_luasnip",
     },
 
     config = function()
+      local cmp_lsp = require("cmp_nvim_lsp")
+
       require("mason").setup()
       require("mason-lspconfig").setup({
 
@@ -168,58 +194,29 @@ require("lazy").setup({
         automatic_enable = true
       })
 
+      local capabilities = cmp_lsp.default_capabilities()
       local on_attach = function(client, _)
         client.server_capabilities.semanticTokensProvider = nil
       end
 
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local servers = { "lua_ls", "pyright", "rust_analyzer", "ts_ls", "tailwindcss", "html", "bashls", "cssls" }
 
-      vim.lsp.config("lua_ls", {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = {
-          Lua = {
-            diagnostics = { globals = { "vim" } },
-            workspace = {
-              library = vim.api.nvim_get_runtime_file("", true),
-              checkThirdParty = false,
-            },
-            telemetry = { enable = false },
-          },
-        },
-      })
-
-
-      vim.lsp.config("pyright", {
-        capabilities = capabilities,
-        on_attach = on_attach,
-      })
-
-      vim.lsp.config("rust_analyzer", {
-        capabilities = capabilities,
-        on_attach = on_attach,
-      })
-
-      vim.lsp.config("ts_ls", {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-      })
-
-      vim.lsp.config("tailwindcss", {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
-      })
-
-      vim.lsp.config("html", { on_attach = on_attach, capabilities = capabilities })
-
-      vim.lsp.config("bashls", { on_attach = on_attach, capabilities = capabilities })
-
-      vim.lsp.config("cssls", { on_attach = on_attach, capabilities = capabilities })
+      for _, lsp in ipairs(servers) do
+        vim.lsp.config(lsp, {
+          capabilities = capabilities,
+          on_attach = on_attach,
+        })
+      end
 
       local cmp = require("cmp")
+      local luasnip = require("luasnip")
+
       cmp.setup({
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
         mapping = {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
@@ -228,6 +225,7 @@ require("lazy").setup({
         },
         sources = {
           { name = "nvim_lsp" },
+          { name = "luasnip" },
         },
       })
     end,
