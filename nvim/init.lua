@@ -30,6 +30,9 @@ vim.opt.ruler = false
 vim.opt.laststatus = 0
 vim.opt.showmode = true
 
+vim.opt.spell = true
+vim.opt.spelllang = { "en_us" }
+
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath("data") .. "/undo"
 
