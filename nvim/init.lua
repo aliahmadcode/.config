@@ -30,9 +30,6 @@ vim.opt.ruler = false
 vim.opt.laststatus = 0
 vim.opt.showmode = true
 
-vim.opt.spell = true
-vim.opt.spelllang = { "en_us" }
-
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath("data") .. "/undo"
 
@@ -49,7 +46,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 vim.api.nvim_create_autocmd("CursorHold", {
   callback = function()
-    vim.diagnostic.open_float(nil, { scope = "cursor", focusable = false, })
+    -- vim.diagnostic.open_float(nil, { scope = "cursor", focusable = false, })
   end,
 })
 
@@ -138,21 +135,9 @@ require("lazy").setup({
     },
     config = function()
       require("nvim-treesitter.config").setup({
-        ensure_installed = { "vim", "lua", "html", "css", "javascript", "typescript", "tsx" },
         highlight = { enable = true },
+        ensure_installed = { "vim", "lua", "html", "css", "javascript", "typescript", "tsx" },
         indent = { enable = true },
-      })
-      require("nvim-ts-autotag").setup({
-        opts = {
-          enable_close = true,
-          enable_rename = true,
-          enable_close_on_slash = false,
-        },
-        per_filetype = {
-          ["html"] = { enable_close = true },
-          ["javascriptreact"] = { enable_close = true },
-          ["typescriptreact"] = { enable_close = true },
-        }
       })
     end,
   },
