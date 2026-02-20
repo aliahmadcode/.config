@@ -46,7 +46,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 vim.api.nvim_create_autocmd("CursorHold", {
   callback = function()
-    -- vim.diagnostic.open_float(nil, { scope = "cursor", focusable = false, })
+    vim.diagnostic.open_float(nil, { scope = "cursor", focusable = false, })
   end,
 })
 
@@ -128,20 +128,6 @@ require("lazy").setup({
     config = true
   },
   {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    dependencies = {
-      "windwp/nvim-ts-autotag",
-    },
-    config = function()
-      require("nvim-treesitter.config").setup({
-        highlight = { enable = true },
-        ensure_installed = { "vim", "lua", "html", "css", "javascript", "typescript", "tsx" },
-        indent = { enable = true },
-      })
-    end,
-  },
-  {
     "L3MON4D3/LuaSnip",
     dependencies = { "rafamadriz/friendly-snippets" },
     config = function()
@@ -190,9 +176,32 @@ require("lazy").setup({
       local servers = { "lua_ls", "pyright", "rust_analyzer", "ts_ls", "tailwindcss", "html", "bashls", "cssls" }
 
       for _, lsp in ipairs(servers) do
+        local settings = {};
+
+        if lsp == "lua_ls" then
+          settings = {
+            Lua = {
+              runtime = {
+                version = 'LuaJIT',
+              },
+              diagnostics = {
+                globals = { 'vim' },
+              },
+              workspace = {
+                library = vim.api.nvim_get_runtime_file("", true),
+                checkThirdParty = false,
+              },
+              format = {
+                enable = true,
+              },
+            }
+          }
+        end
+
         vim.lsp.config(lsp, {
           capabilities = capabilities,
           on_attach = on_attach,
+          settings = settings,
         })
       end
 
