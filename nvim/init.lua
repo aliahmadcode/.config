@@ -1,4 +1,7 @@
 vim.opt.termguicolors = true
+vim.diagnostic.config({ virtual_text = false, virtual_lines = false })
+
+
 vim.opt.cursorline = false
 vim.opt.signcolumn = "yes"
 vim.opt.wrap = false
@@ -23,17 +26,12 @@ vim.opt.guicursor = "n-v-i-c:block-Cursor"
 vim.opt.wrap = true
 vim.opt.colorcolumn = "80"
 vim.opt.backspace = "indent,eol,start"
-vim.cmd("colorscheme habamax")
-vim.api.nvim_set_hl(0, "Visual", { bg = "#444444", fg = nil })
 vim.g.netrw_banner = 0
 vim.opt.ruler = false
 vim.opt.laststatus = 0
 vim.opt.showmode = true
-
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath("data") .. "/undo"
-
-vim.diagnostic.config({ virtual_text = false, virtual_lines = false })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('highlight_yank', {}),
@@ -58,8 +56,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
   end,
 })
-
-
 
 vim.g.mapleader = " "
 
@@ -91,6 +87,35 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  {
+    "wincent/base16-nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd([[colorscheme alien-blood]])
+      vim.o.background = 'dark'
+      vim.cmd([[hi Normal ctermbg=NONE]])
+      -- Less visible window separator
+      vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#131F13" })
+      -- Make comments more prominent -- they are important.
+      vim.api.nvim_set_hl(0, 'Comment', { fg = "#999999" })
+      -- Make it clearly visible which argument we're at.
+      local marked = vim.api.nvim_get_hl(0, { name = 'PMenu' })
+      vim.api.nvim_set_hl(0, 'LspSignatureActiveParameter',
+        { fg = marked.fg, bg = marked.bg, ctermfg = marked.ctermfg, ctermbg = marked.ctermbg, bold = true })
+    end
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    config = function()
+      require("nvim-treesitter.config").setup({
+        ensure_installed = { "lua", "rust" },
+        install_dir = vim.fn.stdpath("data") .. "/site/parser",
+        highlight = { enable = false },
+        indent = { enable = true },
+      })
+    end
+  },
   {
     'nvim-telescope/telescope.nvim',
     version = '*',
@@ -163,6 +188,7 @@ require("lazy").setup({
           "cssls",
           "bashls",
           "pyright",
+          "rust_analyzer"
         },
 
         automatic_enable = true
@@ -184,15 +210,12 @@ require("lazy").setup({
               runtime = {
                 version = 'LuaJIT',
               },
-              diagnostics = {
-                globals = { 'vim' },
-              },
               workspace = {
                 library = vim.api.nvim_get_runtime_file("", true),
                 checkThirdParty = false,
               },
-              format = {
-                enable = true,
+              diagnostics = {
+                globals = { 'vim' },
               },
             }
           }
