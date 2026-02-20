@@ -21,6 +21,14 @@
 !ranger/
 !ranger/**
 
+zsh/.zcompdump*
+!zsh/.zshrc
+!zsh/.p10k.zsh
+!zsh/.zsh_history
+
+!tmux/
+!tmux/**
+
 !mimeapps.list
 
 !.gitignore
