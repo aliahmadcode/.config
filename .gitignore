@@ -22,9 +22,9 @@
 !ranger/**
 
 zsh/.zcompdump*
+zsh/.zsh_history
 !zsh/.zshrc
 !zsh/.p10k.zsh
-!zsh/.zsh_history
 
 !tmux/
 !tmux/**

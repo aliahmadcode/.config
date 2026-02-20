@@ -8,6 +8,7 @@ fi
 export ZSH="$HOME/.oh-my-zsh"
 HISTFILE="$ZDOTDIR/.zsh_history"
 
+# https://addons.mozilla.org/en-US/firefox/addon/dark-l20-green/
 # git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
 # ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 ZSH_THEME="powerlevel10k/powerlevel10k"
