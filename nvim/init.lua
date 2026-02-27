@@ -17,7 +17,7 @@ vim.opt.incsearch = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.mouse = "a"
 vim.opt.number = true
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true 
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.ignorecase = true
@@ -63,7 +63,7 @@ local opts = { noremap = true, silent = true }
 
 vim.keymap.set("n", "<A-e>", ":Rex<CR>", opts)
 vim.keymap.set("n", "<leader>e", ":Ex<CR>", opts)
-vim.keymap.set("n", "<C-f>", ":lua vim.lsp.buf.format()<CR>", opts)
+vim.keymap.set("n", "<C-f>", ":w<CR>:lua vim.lsp.buf.format()<CR>", opts)
 
 vim.keymap.set("n", "ss", ":split<CR>", opts)
 vim.keymap.set("n", "sv", ":vsplit<CR>", opts)
@@ -92,7 +92,7 @@ require("lazy").setup({
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd([[colorscheme alien-blood]])
+      vim.cmd([[colorscheme atelier-savanna]])
       vim.o.background = 'dark'
       vim.cmd([[hi Normal ctermbg=NONE]])
       -- Less visible window separator
@@ -109,7 +109,7 @@ require("lazy").setup({
     "nvim-treesitter/nvim-treesitter",
     config = function()
       require("nvim-treesitter.config").setup({
-        ensure_installed = { "lua", "rust" },
+        ensure_installed = { "lua", "rust", },
         install_dir = vim.fn.stdpath("data") .. "/site/parser",
         highlight = { enable = false },
         indent = { enable = true },
@@ -176,10 +176,20 @@ require("lazy").setup({
 
     config = function()
       local cmp_lsp = require("cmp_nvim_lsp")
+      local servers = {
+        "lua_ls",
+        "ts_ls",
+        "tailwindcss",
+        "html",
+        "cssls",
+        "bashls",
+        "pyright",
+        "rust_analyzer",
+        "clangd",
+      }
 
       require("mason").setup()
       require("mason-lspconfig").setup({
-
         ensure_installed = {
           "lua_ls",
           "ts_ls",
@@ -188,18 +198,15 @@ require("lazy").setup({
           "cssls",
           "bashls",
           "pyright",
-          "rust_analyzer"
-        },
-
-        automatic_enable = true
+          "rust_analyzer",
+          "clangd",
+        }
       })
 
       local capabilities = cmp_lsp.default_capabilities()
       local on_attach = function(client, _)
         client.server_capabilities.semanticTokensProvider = nil
       end
-
-      local servers = { "lua_ls", "pyright", "rust_analyzer", "ts_ls", "tailwindcss", "html", "bashls", "cssls" }
 
       for _, lsp in ipairs(servers) do
         local settings = {};

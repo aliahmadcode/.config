@@ -9,9 +9,6 @@
 !kitty/
 !kitty/**
 
-!swaylock/
-!swaylock/**
-
 !waybar/
 !waybar/**
 
