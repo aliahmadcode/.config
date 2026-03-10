@@ -26,6 +26,11 @@ zsh/.zsh_history
 !tmux/
 !tmux/**
 
+!rustfmt/
+!rustfmt/**
+
+
+
 !mimeapps.list
 
 !.gitignore
