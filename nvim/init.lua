@@ -1,7 +1,6 @@
 vim.opt.termguicolors = true
 vim.diagnostic.config({ virtual_text = false, virtual_lines = false })
 
-
 vim.opt.cursorline = false
 vim.opt.signcolumn = "yes"
 vim.opt.wrap = false
@@ -24,15 +23,18 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.guicursor = "n-v-i-c:block-Cursor"
 vim.opt.wrap = true
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "110"
 vim.opt.backspace = "indent,eol,start"
 vim.g.netrw_banner = 0
 vim.opt.ruler = false
-vim.opt.laststatus = 0
-vim.opt.showmode = true
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath("data") .. "/undo"
 vim.opt.scrolloff = 8
+
+vim.opt.laststatus = 2
+vim.opt.showmode = true
+
+vim.opt.statusline = "%f %=%l:%c %p%%"
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('highlight_yank', {}),
@@ -65,7 +67,7 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set("n", "<A-e>", ":Rex<CR>", opts)
 vim.keymap.set("n", "<leader>e", ":Ex<CR>", opts)
 vim.keymap.set("n", "<C-f>", ":w<CR>:lua vim.lsp.buf.format()<CR>", opts)
-vim.keymap.set("n", "<C-a>", ":lua vim.lsp.buf.code_action()<CR>", opts)
+vim.keymap.set("n", "<C-S-a>", ":lua vim.lsp.buf.code_action()<CR>", opts)
 
 vim.keymap.set("n", "ss", ":split<CR>", opts)
 vim.keymap.set("n", "sv", ":vsplit<CR>", opts)
@@ -94,7 +96,7 @@ require("lazy").setup({
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd([[colorscheme tokyo-night-terminal-dark]])
+      vim.cmd([[colorscheme habamax]])
     end
   },
   {
