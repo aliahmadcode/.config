@@ -92,6 +92,12 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require("gitsigns").setup()
+    end
+  },
+  {
     "wincent/base16-nvim",
     lazy = false,
     priority = 1000,
