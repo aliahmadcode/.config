@@ -67,7 +67,7 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set("n", "<A-e>", ":Rex<CR>", opts)
 vim.keymap.set("n", "<leader>e", ":Ex<CR>", opts)
 vim.keymap.set("n", "<C-f>", ":w<CR>:lua vim.lsp.buf.format()<CR>", opts)
-vim.keymap.set("n", "<C-S-a>", ":lua vim.lsp.buf.code_action()<CR>", opts)
+vim.keymap.set("n", "<leader>;", ":lua vim.lsp.buf.code_action()<CR>", opts)
 
 vim.keymap.set("n", "ss", ":split<CR>", opts)
 vim.keymap.set("n", "sv", ":vsplit<CR>", opts)
@@ -102,7 +102,7 @@ require("lazy").setup({
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd([[colorscheme habamax]])
+      vim.cmd([[colorscheme gruvbox-material-dark-hard]])
     end
   },
   {
