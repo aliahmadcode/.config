@@ -186,6 +186,7 @@ require("lazy").setup({
         "pyright",
         "rust_analyzer",
         "clangd",
+        "ltex",
       }
 
       require("mason").setup()
@@ -200,6 +201,7 @@ require("lazy").setup({
           "pyright",
           "rust_analyzer",
           "clangd",
+          "ltex",
         }
       })
 
@@ -225,6 +227,20 @@ require("lazy").setup({
                 globals = { 'vim' },
               },
             }
+          }
+        end
+
+        if lsp == "ltex" then
+          settings = {
+            ltex = {
+              language = "en-US",
+              diagnosticSeverity = "warning",
+              setenceCacheSize = 2000,
+              additionalRules = {
+                enablePickyRules = true,
+                motherTongue = "en",
+              },
+            },
           }
         end
 
