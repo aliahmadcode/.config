@@ -30,7 +30,6 @@ zsh/.zsh_history
 !rustfmt/**
 
 
-
 !mimeapps.list
 
 !.gitignore

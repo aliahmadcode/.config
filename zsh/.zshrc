@@ -43,3 +43,8 @@ esac
 
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+export PATH=$JAVA_HOME/bin:$PATH
+
+export QT_QPA_PLATFORM=xcb
