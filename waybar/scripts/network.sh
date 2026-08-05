@@ -3,7 +3,7 @@
 conn=$(nmcli -t -f ACTIVE,SSID dev wifi | grep '^yes' | cut -d: -f2)
 
 if [ -z "$conn" ]; then
-  echo '{"text":"󰤭  Disconnected"}'
+  echo '{"text":"󰤭 Disconnected"}'
 else
-  echo "{\"text\":\"󰤨  $conn\"}"
+  echo "{\"text\":\"󰤨 $conn\"}"
 fi

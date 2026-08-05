@@ -4,7 +4,7 @@
     "height": 30,
     "spacing": 4,
     "modules-left": ["clock", "hyprland/workspaces", "custom/tmux"],
-    "modules-right": ["cpu", "memory", "battery", "custom/network"],
+    "modules-right": ["custom/forget", "cpu", "memory", "battery", "custom/network"],
 
     "hyprland/workspaces": {
       "disable-scroll": true,
@@ -41,12 +41,12 @@
     },
 
     "clock": {
-        "format": "{:%a  %d  %I:%M}",
+        "format": "{:%a %d %I:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
 
     "cpu": {
-        "format": "  {usage}",
+        "format": " {usage}",
         "tooltip": true
     },
     "memory": {

@@ -44,14 +44,19 @@ window#waybar {
 }
 
 #battery.warning {
-    color: orange;
+  color: orange;
 }
 
 #battery.critical {
-    color: #ffcc66;
+  color: #ffcc66;
 }
 
 #custom-tmux {
+  margin-right: 5px;
+  color: #555555;
+}
+
+#custom-forget {
   margin-right: 5px;
   color: #555555;
 }
