@@ -48,3 +48,4 @@ export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
 export PATH=$JAVA_HOME/bin:$PATH
 
 export QT_QPA_PLATFORM=xcb
+export PATH="$HOME/development/dart-sdk/bin:$HOME/development/flutter/bin:$PATH"

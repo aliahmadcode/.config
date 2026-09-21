@@ -18,6 +18,7 @@ application/pdf=org.gnome.Evince.desktop
 text/xml=firefox.desktop
 application/xml=firefox.desktop
 image/gif=firefox.desktop
+x-scheme-handler/antigravity=antigravity.desktop
 
 [Added Associations]
 x-scheme-handler/http=firefox.desktop;

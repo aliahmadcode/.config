@@ -19,8 +19,8 @@ window#waybar {
 }
 
 #workspaces button.active {
-  border-bottom: 2px solid #ffcc66;
-  color: #e5e5e5;
+  border-bottom: 2px solid #555555;
+  color: #555555;
 }
 
 #clock {
@@ -40,7 +40,7 @@ window#waybar {
 }
 
 #battery {
-  color: green;
+  color: #555555;
 }
 
 #battery.warning {
@@ -57,6 +57,11 @@ window#waybar {
 }
 
 #custom-forget {
+  margin-right: 5px;
+  color: #555555;
+}
+
+#custom-network {
   margin-right: 5px;
   color: #555555;
 }
