@@ -1,56 +1,61 @@
 {
-    "layer": "bottom",
+    "layer": "top",
     "position": "bottom",
     "height": 30,
     "spacing": 4,
-    "modules-left": ["clock", "hyprland/workspaces", "custom/tmux"],
-    "modules-right": ["custom/forget", "cpu", "memory", "battery", "custom/network"],
-
+    "modules-left": [
+        "clock",
+        "hyprland/workspaces",
+        "custom/tmux"
+    ],
+    "modules-right": [
+        "custom/forget",
+        "cpu",
+        "memory",
+        "battery",
+        "custom/network"
+    ],
     "hyprland/workspaces": {
-      "disable-scroll": true,
-      "all-outputs": true,
-      "on-click": "activate",
-      "format": "{icon}",
-      "format-icons": {
-          "1": "web",
-          "2": "code",
-          "3": "a",
-          "4": "b",
-          "5": "c",
-          "6": "d",
-          "7": "e",
-          "8": "f",
-          "9": "g"
-      }  
+        "disable-scroll": true,
+        "all-outputs": true,
+        "on-click": "activate",
+        "format": "{icon}",
+        "format-icons": {
+            "1": "web",
+            "2": "code",
+            "3": "a",
+            "4": "b",
+            "5": "c",
+            "6": "d",
+            "7": "e",
+            "8": "f",
+            "9": "g"
+        }
     },
-
     "custom/network": {
-      "format": "{}",
-      "return-type": "json",
-      "interval": 3,
-      "exec": "~/.config/waybar/scripts/network.sh",
-      "on-click": "nmtui"
+        "format": "{}",
+        "return-type": "json",
+        "interval": 3,
+        "exec": "~/.config/waybar/scripts/network.sh",
+        "on-click": "kitty -e nmtui"
     },
-
     "custom/tmux": {
         "format": "{}",
         "return-type": "json",
         "max-length": 80,
-        "interval": 1, 
+        "interval": 1,
         "exec": "~/.config/waybar/scripts/tmux_status.sh"
     },
-
     "clock": {
         "format": "{:%a %d %I:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
-
     "cpu": {
-        "format": " {usage}",
+        "format": "\uf4bc {usage}",
         "tooltip": true
     },
     "memory": {
-        "format": "󰪩 {}",
+        "format": "\udb82\udea9 {}",
         "tooltip": true
     },
     "battery": {
@@ -59,10 +64,9 @@
             "warning": 50,
             "critical": 30
         },
-        "format": "󰁹 {capacity}%",
-        "format-charging": "󰂄 {capacity}%",
-        "format-plugged": " {capacity}%",
+        "format": "\udb80\udc79 {capacity}%",
+        "format-charging": "\udb80\udc84 {capacity}%",
+        "format-plugged": "\uf1e6 {capacity}%",
         "tooltip": true
     }
-
 }
